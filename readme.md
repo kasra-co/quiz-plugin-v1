@@ -8,7 +8,7 @@ post_id                   | quiz_id
 --------------------------|--------
 int (primary key, unique) | varchar(32) (unique)
 
-See the service for the quiz schema.
+See the [quiz service](https://bitbucket.org/menapost/quiz-service) for the quiz schema.
 
 ## API
 
