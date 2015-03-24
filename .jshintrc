@@ -1,0 +1,6 @@
+{
+    "quotmark": true,
+    "esnext": true,
+    "browser": true,
+    "browserify": true
+}
