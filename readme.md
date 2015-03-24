@@ -24,6 +24,7 @@ Route | Description | Returns
 `POST /quiz/:quizId/question` | Add a question to a quiz | `201 Created`: Question object
 `PUT /quiz/:quizId/question/:questionIndex` | Replace a question on a quiz, identified by its position in the quiz | `201 Created`: Question object
 `PUT /quiz/:quizId/question/:questionIndex/image`, `content-type: multipart/form-data` | Set the header image for a question | `201 Created`: Image url
+`PUT /result/:quizId/:userId` | Create a result post for a user | `201 Created`: post url
 
 ## Front End Facade
 
