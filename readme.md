@@ -74,7 +74,7 @@ var save = Reflux.createAction({
 			}
 
 			this.completed( result.body );
-		}.bind( this ));
+		}.bind( this ))( quiz );
 	}
 });
 ```
