@@ -68,7 +68,7 @@ The quiz editor actions should use the hostAdaptor functions for server communic
 var save = Reflux.createAction({
 	asyncResult: true,
 	preEmit: function( quiz ) {
-		saver( function( error, result ) {
+		hostAdaptor.saver( function( error, result ) {
 			if( error ) {
 				return this.failed( error ); // A child action of any asyncResult action
 			}
