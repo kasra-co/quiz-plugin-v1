@@ -18,8 +18,8 @@ Endpoint: `/wp-quiz`
 
 Route | Description | Returns
 --|--|--
-`POST /quiz/:postId` | Save a new quiz and associate it with the `:postId` post. | `201 Created`: Quiz object<br>`404 Not Found` if the post does not exist (quizzes must be associated with a post)
-`GET /quiz/:postId` | | `200 OK` Quiz object<br>`404 Not Found`
+`POST /quiz/:postId` | Save a new quiz and associate it with the `:postId` post. | `201 Created`: Quiz object, `404 Not Found` if the post does not exist (quizzes must be associated with a post)
+`GET /quiz/:postId` | | `200 OK` Quiz object, `404 Not Found`
 `PUT /quiz/:postId` | Replace a quiz | `201 Created`: Quiz object
 `POST /quiz/result/:quizId/:userId` | Create a result post for a user | `201 Created`: post url
 
