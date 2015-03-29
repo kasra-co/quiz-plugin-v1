@@ -52,7 +52,7 @@ request.get( '/quiz/' + window.WPQuizData.post_id )
 var hostAdaptor = {
 	saver: function( done ) {
 		return function( quiz ) {
-			var method = quiz._id? 'PUT', 'POST;
+			var method = quiz._id? 'PUT', 'POST';
 
 			request[ method ]( '/quiz/' + window.WPQuizData.post_id )
 			.set( 'ContentType', 'application/json' )
