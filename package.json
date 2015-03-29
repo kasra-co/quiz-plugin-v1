@@ -1,0 +1,36 @@
+{
+  "name": "quiz-adaptor",
+  "version": "0.1.0",
+  "description": "A React based quiz app, packaged as a Wordpress plugin.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@bitucket.org:menapost/quiz-adaptor.git"
+  },
+  "author": "Dan Ross <dan.ross@kasra.co>",
+  "license": "private",
+  "dependencies": {
+    "lodash": "^3.5.0",
+    "quiz": "git+ssh://git@kasra-deploy:menapost/quiz-user-front-end.git",
+    "react": "^0.13.0",
+    "reflux": "^0.2.7"
+  },
+  "devDependencies": {
+    "browserify": "^9.0.3",
+    "es6ify": "^1.6.0",
+    "esprima-fb": "~13001.1.0-dev-harmony-fb",
+    "gulp": "^3.8.11",
+    "gulp-sass": "^1.3.3",
+    "gulp-sourcemaps": "^1.5.0",
+    "gulp-uglify": "^1.1.0",
+    "gulp-util": "^3.0.4",
+    "gulp-zip": "^3.0.0",
+    "reactify": "^1.1.0",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^2.4.0"
+  }
+}

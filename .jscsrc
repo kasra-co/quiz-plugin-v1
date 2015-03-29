@@ -1,0 +1,78 @@
+{
+	"esprima": "./node_modules/esprima-fb",
+    "disallowSpacesInNamedFunctionExpression": {
+        "beforeOpeningRoundBrace": true
+    },
+    "disallowSpacesInFunctionExpression": {
+        "beforeOpeningRoundBrace": true
+    },
+    "disallowSpacesInAnonymousFunctionExpression": {
+        "beforeOpeningRoundBrace": true
+    },
+    "disallowSpacesInFunctionDeclaration": {
+        "beforeOpeningRoundBrace": true
+    },
+    "disallowEmptyBlocks": true,
+    "disallowQuotedKeysInObjects": true,
+    "disallowSpaceAfterObjectKeys": true,
+    "disallowSpaceAfterPrefixUnaryOperators": true,
+    "disallowSpaceBeforePostfixUnaryOperators": true,
+    "disallowSpaceBeforeBinaryOperators": [
+        ","
+    ],
+    "disallowMixedSpacesAndTabs": true,
+    "disallowTrailingWhitespace": true,
+    "disallowTrailingComma": true,
+    "disallowYodaConditions": true,
+    "disallowKeywords": [ "with", "eval" ],
+    "disallowMultipleLineBreaks": true,
+    "disallowMultipleVarDecl": true,
+    "requireSpaceBeforeBlockStatements": true,
+    "requireParenthesesAroundIIFE": true,
+    "requireBlocksOnNewline": 1,
+    "requireCommaBeforeLineBreak": true,
+    "requireSpacesInsideArrayBrackets": {
+        "allExcept": [ "[", "]", "(", ")", "{", "}" ]
+    },
+    "requireSpacesInsideBrackets": {
+        "allExcept": [ "[", "]", "(", ")", "{", "}" ]
+    },
+    "requireSpacesInsideParentheses": {
+        "all": true,
+        "except": [ "[", "]", "(", ")", "{", "}" ]
+    },
+    "requireSpacesInsideObjectBrackets": {
+        "allExcept": [ "[", "]", "(", ")", "{", "}" ]
+    },
+    "requireSpaceBeforeBinaryOperators": true,
+    "requireSpaceAfterBinaryOperators": true,
+    "requireSpacesInFunctionDeclaration": {
+        "beforeOpeningCurlyBrace": true
+    },
+    "requireSpacesInConditionalExpression": {
+        "beforeConsequent": true,
+        "beforeAlternate": true
+    },
+    "requireCamelCaseOrUpperCaseIdentifiers": true,
+    "requireLineFeedAtFileEnd": true,
+    "requireCapitalizedConstructors": true,
+    "requireDotNotation": true,
+    "requireSpacesInForStatement": true,
+    "requireSpaceBetweenArguments": true,
+    "requireCurlyBraces": [
+        "do"
+    ],
+    "requireSpaceAfterKeywords": [
+        "else",
+        "do",
+        "case",
+        "return",
+        "try",
+        "typeof"
+    ],
+    "requireSpaceAfterLineComment": true,
+    "safeContextKeyword": "self",
+    "validateLineBreaks": "LF",
+    "validateQuoteMarks": "\"",
+    "validateIndentation": "\t"
+}
