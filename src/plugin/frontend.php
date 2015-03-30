@@ -24,5 +24,5 @@ add_filter( 'the_content', function( $content ) {
 
 add_action( 'wp_enqueue_scripts', function() {
 	wp_enqueue_script( 'quiz-frontend', plugin_dir_url( __DIR__ ) . plugin_basename( __DIR__ . '/static/index.min.js' ), [], VERSION, true );
-	wp_enqueue_style( 'quiz-frontend', plugin_dir_url( __DIR__ ) . plugin_basename( __DIR__ . '/static/style.css' ), [], VERSION );
+	wp_enqueue_style( 'quiz-frontend', plugin_dir_url( __DIR__ ) . plugin_basename( __DIR__ . '/static/index.css' ), [], VERSION );
 });
