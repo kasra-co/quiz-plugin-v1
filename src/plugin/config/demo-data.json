@@ -17,7 +17,7 @@
 		}
 	}, {
 		"title": "True Scotsman",
-		"text": "You dont\"t have to go home, but you can\"t sleep here",
+		"text": "You dont't have to go home, but you can't sleep here",
 		"media": {
 			"image": "/images/macallan.gif",
 			"credit": "Macallan Distillery",
@@ -28,7 +28,7 @@
 
 	"questions": [{
 		"title": "What is your favorite beer?",
-		"color": "ff0000", // The option row is rendered with a unique solid color background
+		"color": "ff0000",
 		"media": {
 			"image": "/images/ozias.jpg",
 			"credit": "My fridge",
