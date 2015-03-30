@@ -28,14 +28,14 @@ function loadQuiz( $postId ) {
 	}
 
 	// get service info
-	$endpoint = get_option( 'menapost_quiz_endpoint', null );
+	$options = get_option( 'menapost-quiz-options', null );
+	$endpoint = $options[ 'quizEndpoint' ];
 
 	if( $endpoint === null ) {
 		trigger_error( 'Menapost quiz: article endpoint undefined', E_USER_WARNING );
 		return;
 	}
 
-	$quiz = fetchArticleQuiz( $endpoint, $postId );
-
+	//return fetchArticleQuiz( $endpoint, $postId );
 	return json_decode( file_get_contents( __DIR__ . '/../config/demo-data.json' ), true );
 }
