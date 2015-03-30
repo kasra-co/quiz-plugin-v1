@@ -1,9 +1,6 @@
 <?php
 
-require_once( __DIR__ . 'lib/load-quiz.php' );
-
-wp_enqueue_script( 'quiz-frontend', plugin_dir_url( __DIR__ ) . 'static/index.js', [], VERSION, true );
-wp_enqueue_style( 'quiz-frontend', plugin_dir_url( __DIR__ ) . 'static/style.css', [], VERSION, true );
+require_once( __DIR__ . '/lib/load-quiz.php' );
 
 // If this post has a quiz, then append a div to the post. The quiz will be mounted within it.
 add_filter( 'the_content', function( $content ) {
@@ -19,7 +16,12 @@ add_filter( 'the_content', function( $content ) {
 		return $content;
 	}
 
-	wp_localize_script( 'quiz-data', 'quizData', $quiz );
+	wp_localize_script( 'quiz-frontend', 'quizContent', $quiz);
 
 	return $content . '<div id="quiz"></div>';
+});
+
+add_action( 'wp_enqueue_scripts', function() {
+	wp_enqueue_script( 'quiz-frontend', plugin_dir_url( __DIR__ ) . plugin_basename( __DIR__ . '/static/index.min.js' ), [], VERSION, true );
+	wp_enqueue_style( 'quiz-frontend', plugin_dir_url( __DIR__ ) . plugin_basename( __DIR__ . '/static/style.css' ), [], VERSION );
 });
