@@ -1,0 +1,53 @@
+@media (max-width: 480px) {
+	.threeUp  {
+		width: 32.5%;
+		p {
+			height: 90px;
+			font-size: 0.95em;
+			margin: 4px;
+		}
+	}
+	.threeUp p,
+	.oneUp p {
+		height: 100px;
+	}
+	.mobileStack li.threeUp {
+		width: 100%;
+		margin-left: 0;
+		margin-right: 0;
+	}
+}
+@media (max-width: 600px){
+	.questionOptions p {
+		line-height: 1.25;
+	}
+}
+@media (min-width: 480px) {
+	.questionOptions p {
+		height: 130px;
+	}
+	.threeUp {
+		width: 32.75%;
+	}
+}
+.threeUp {
+	&:nth-of-type(2),
+	&:nth-of-type(5),
+	&:nth-of-type(8) {
+		margin-left: 3px;
+		margin-right: 3px;
+	}
+}
+.twoUp {
+	width: 49.4%;
+	&:nth-of-type(1),
+	&:nth-of-type(3),
+	&:nth-of-type(5),
+	&:nth-of-type(7),
+	&:nth-of-type(9) {
+		margin-right: 3px;
+	}
+}
+.oneUp {
+	width: 100%;
+}
