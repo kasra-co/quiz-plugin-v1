@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "browserify": "^9.0.3",
+    "del": "^1.1.1",
     "es6ify": "^1.6.0",
     "esprima-fb": "~13001.1.0-dev-harmony-fb",
     "gulp": "^3.8.11",

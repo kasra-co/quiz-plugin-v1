@@ -10,10 +10,12 @@ var sourcemaps = require( 'gulp-sourcemaps' );
 var uglify = require( 'gulp-uglify' );
 var sass = require( 'gulp-sass' );
 var _ = require( 'lodash' );
+var del = require( 'del' );
 
-gulp.task( 'watch', [ 'sass', 'php' ], function() {
+gulp.task( 'watch', [ 'sass', 'config', 'php' ], function() {
 	gulp.watch( 'src/style/**/*.scss', [ 'sass' ]);
 	gulp.watch( 'src/plugin/**/*.php', [ 'php' ]);
+	gulp.watch( 'src/plugin/config/**/*', [ 'config' ]);
 	bundle();
 });
 
@@ -26,6 +28,15 @@ gulp.task( 'sass', function() {
 gulp.task( 'php', function() {
 	gulp.src( 'src/plugin/**/*.php' )
 	.pipe( gulp.dest( 'dist' ));
+});
+
+gulp.task( 'config', function() {
+	gulp.src( 'src/plugin/config/**/*' )
+	.pipe( gulp.dest( 'dist/config' ));
+});
+
+gulp.task( 'clean', function() {
+	del([ 'dist' ]);
 });
 
 // Watchify helps Browserify to only rebuild the parts of a source tree that are affected by a change, to reduce build time.
@@ -48,5 +59,5 @@ function bundle() {
 	return bundler.bundle()
 	.on( 'error', gutil.log.bind( gutil, 'Browserify error' )) // Log errors during build
 	.pipe( source( 'index.min.js' ))
-	.pipe( gulp.dest( './dist' ));
+	.pipe( gulp.dest( './dist/static' ));
 }
