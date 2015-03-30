@@ -28,7 +28,7 @@ function loadQuiz( $postId ) {
 	}
 
 	// get service info
-	$endpoint = get_option( 'quiz_endpoint', null );
+	$endpoint = get_option( 'menapost_quiz_endpoint', null );
 
 	if( $endpoint === null ) {
 		trigger_error( 'Menapost quiz: article endpoint undefined', E_USER_WARNING );
