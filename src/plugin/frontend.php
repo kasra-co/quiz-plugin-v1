@@ -18,7 +18,7 @@ add_filter( 'the_content', function( $content ) {
 
 	wp_localize_script( 'quiz-frontend', 'quizContent', $quiz);
 
-	return $content . '<div id="quiz"></div>';
+	return $content . '<div id="quiz-mount-point"></div>';
 });
 
 add_action( 'wp_enqueue_scripts', function() {
