@@ -58,6 +58,6 @@ bundler.on( 'log', gutil.log ); // Help bundler log to the terminal
 function bundle() {
 	return bundler.bundle()
 	.on( 'error', gutil.log.bind( gutil, 'Browserify error' )) // Log errors during build
-	.pipe( source( 'index.min.js' ))
+	.pipe( source( 'quiz-app.min.js' ))
 	.pipe( gulp.dest( './dist/static' ));
 }
