@@ -3,7 +3,7 @@
 		"title": "نتيجة اجاباتك :شخصية مرنة",
 		"text": "أنت شخصية مرنة، بسيطة، علاقاتك الاجتماعية ممتازة، فأنت صديق الكل والموظف المفضل عند مديرك، أو الطالب المثالي لدى أستاذك.",
 		"media": {
-			"image": "/images/result.png",
+			"image": "http://kasra.co/wp-content/uploads/2015/03/02-180x180.png",
 			"credit": "Getty Images",
 			"via": "Bob"
 		}
@@ -11,7 +11,7 @@
 		"title": "Two",
 		"text": "You are number two.",
 		"media": {
-			"image": "/images/result.png",
+			"image": "http://kasra.co/wp-content/uploads/2015/03/02-180x180.png",
 			"credit": "Getty Images",
 			"via": "Bob"
 		}
@@ -19,7 +19,7 @@
 		"title": "Three",
 		"text": "You are number three.",
 		"media": {
-			"image": "/images/result.png",
+			"image": "http://kasra.co/wp-content/uploads/2015/03/02-180x180.png",
 			"credit": "Getty Images",
 			"via": "Bob"
 		}
@@ -30,7 +30,7 @@
 		"prompt": "Question One?",
 		"color": "ff0000",
 		"media": {
-			"image": "images/thief.jpg",
+			"image": "/images/thief.jpg",
 			"credit": "Getty Images",
 			"via": "Bob"
 		},
@@ -63,4 +63,4 @@
 			"عندما تقابلهم مرة أخرى تقول لهم المعلومة الصحيحة"
 		]
 	}]
-}
+};
