@@ -20,7 +20,7 @@ gulp.task( 'watch', [ 'sass', 'config', 'php' ], function() {
 });
 
 gulp.task( 'sass', function() {
-	gulp.src( 'src/style/index.scss' )
+	gulp.src( 'node_modules/quiz/style/index.scss' )
 	.pipe( sass() )
 	.pipe( gulp.dest( 'dist/static' ));
 });
