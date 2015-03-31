@@ -13,7 +13,7 @@ var _ = require( 'lodash' );
 var del = require( 'del' );
 
 gulp.task( 'watch', [ 'sass', 'config', 'php' ], function() {
-	gulp.watch( 'src/style/**/*.scss', [ 'sass' ]);
+	gulp.watch( 'node_modules/quiz/style/**/*.scss', [ 'sass' ]);
 	gulp.watch( 'src/plugin/**/*.php', [ 'php' ]);
 	gulp.watch( 'src/plugin/config/**/*', [ 'config' ]);
 	bundle();
