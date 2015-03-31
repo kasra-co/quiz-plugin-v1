@@ -1,56 +1,66 @@
 {
 	"results": [{
-		"title": "American",
-		"text": "Have a Bud Light",
+		"title": "نتيجة اجاباتك :شخصية مرنة",
+		"text": "أنت شخصية مرنة، بسيطة، علاقاتك الاجتماعية ممتازة، فأنت صديق الكل والموظف المفضل عند مديرك، أو الطالب المثالي لدى أستاذك.",
 		"media": {
-			"image": "/images/lightweight.png",
-			"credit": "Budweiser",
-			"via": "http://budweiser.com"
+			"image": "/images/result.png",
+			"credit": "Getty Images",
+			"via": "Bob"
 		}
 	}, {
-		"title": "Canadian",
-		"text": "A Colt and two zigzags for you!",
+		"title": "Two",
+		"text": "You are number two.",
 		"media": {
-			"image": "/images/colt45.jpg",
-			"credit": "Pabst Brewing Co",
-			"via": "http://colt45.com"
+			"image": "/images/result.png",
+			"credit": "Getty Images",
+			"via": "Bob"
 		}
 	}, {
-		"title": "True Scotsman",
-		"text": "You dont't have to go home, but you can't sleep here",
+		"title": "Three",
+		"text": "You are number three.",
 		"media": {
-			"image": "/images/macallan.gif",
-			"credit": "Macallan Distillery",
-			"via": "themacallan.com"
+			"image": "/images/result.png",
+			"credit": "Getty Images",
+			"via": "Bob"
 		}
 	}],
 
 
 	"questions": [{
-		"title": "What is your favorite beer?",
+		"prompt": "Question One?",
 		"color": "ff0000",
 		"media": {
-			"image": "/images/ozias.jpg",
-			"credit": "My fridge",
-			"via": null
+			"image": "images/thief.jpg",
+			"credit": "Getty Images",
+			"via": "Bob"
 		},
-		"options": [
-			"Bud Light",
-			"Heineken",
-			"Colt 45"
+		"answers": [
+			"عندما تقابلهم مرة أخرى تقول لهم المعلو",
+			"عندما تقابلهم مرة أخرى تقول لهم المعلو",
+			"أن تجد شخصاً يقودك إلى التصرفات الصحي"
+
 		]
 	}, {
-		"title": "How many shots can you drink in a row?",
+		"prompt": "Question Two?",
 		"color": "00ff00",
 		"media": {
-			"image": "/images/ozias.jpg"
+			"image": "/images/thief.jpg"
 		},
-		"options": [
-			"One, with chase",
-			"I lose count partway through",
-			"The doctor says there is a shot glass in my belly"
+		"answers": [
+			"عندما مرة أخرى تقول لهم المعلومة",
+			"عندما مرة أخرى تقول لهم المعلومة",
+			"أن تجد شخصاًإلى التصرفات الصحيحة"
 		]
-	}],
-	"newQuestion": "",
-	"newOption": ""
+	}, {
+		"prompt": "Question Three?",
+		"color": "0000ff",
+		"media": {
+			"image": "/images/thief.jpg"
+		},
+		"answers": [
+			"اسأل: كم دقيقة لا أقضيها أمام شبكة الإنترنت!",
+			"عندما تقابلهم مرة أخرى تقول لهم المعلومة الصحيحة",
+			"عندما تقابلهم مرة أخرى تقول لهم المعلومة الصحيحة"
+		]
+	}]
 }
