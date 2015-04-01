@@ -23,7 +23,13 @@ add_filter( 'the_content', function( $content ) {
 });
 
 add_action( 'wp_enqueue_scripts', function() {
-	// TODO: check if post is a quiz post
-	wp_enqueue_script( 'quiz-frontend', plugin_dir_url( __DIR__ ) . plugin_basename( __DIR__ . '/static/quiz-app.min.js' ), [], VERSION, true );
-	wp_enqueue_style( 'quiz-frontend', plugin_dir_url( __DIR__ ) . plugin_basename( __DIR__ . '/static/index.css' ), [], VERSION );
+	// TODO: check if post is a quiz post before enqueueing quiz scripts
+
+	$staticPath = plugin_dir_url( __DIR__ ) . plugin_basename( __DIR__ );
+
+	$jsRevs = json_decode( file_get_contents( $staticPath . '/static/rev-manifest-js.json' ), true );
+	wp_enqueue_script( 'quiz-frontend', $staticPath . '/static/' . $jsRevs[ 'quiz-app.min.js' ], [], null, true );
+
+	$cssRevs = json_decode( file_get_contents( $staticPath . '/static/rev-manifest-css.json' ), true );
+	wp_enqueue_style( 'quiz-frontend', $staticPath  . '/static/' . $cssRevs[ 'index.css' ]);
 });
