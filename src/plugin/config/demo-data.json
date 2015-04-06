@@ -5,7 +5,7 @@
 		"media": {
 			"image": "http://kasra.co/wp-content/uploads/2015/03/02-180x180.png",
 			"credit": "Getty Images",
-			"via": "Bob"
+			"via": "http://google.com"
 		}
 	}, {
 		"title": "Two",
@@ -13,7 +13,7 @@
 		"media": {
 			"image": "http://kasra.co/wp-content/uploads/2015/03/02-180x180.png",
 			"credit": "Getty Images",
-			"via": "Bob"
+			"via": "http://google.com"
 		}
 	}, {
 		"title": "Three",
@@ -21,7 +21,7 @@
 		"media": {
 			"image": "http://kasra.co/wp-content/uploads/2015/03/02-180x180.png",
 			"credit": "Getty Images",
-			"via": "Bob"
+			"via": "http://google.com"
 		}
 	}],
 
@@ -30,9 +30,9 @@
 		"prompt": "Question One?",
 		"color": "ff0000",
 		"media": {
-			"image": "/images/thief.jpg",
+			"image": "http://2tqqt82jmt7v3yb42gsd75a19wd.wpengine.netdna-cdn.com/wp-content/uploads/2015/03/RedRoo-800x400-800x400.jpg",
 			"credit": "Getty Images",
-			"via": "Bob"
+			"via": "http://google.com"
 		},
 		"answers": [
 			"عندما تقابلهم مرة أخرى تقول لهم المعلو",
@@ -44,7 +44,8 @@
 		"prompt": "Question Two?",
 		"color": "00ff00",
 		"media": {
-			"image": "/images/thief.jpg"
+			"image": "http://kasra.co/wp-content/uploads/2015/03/VKTx95G.jpg",
+			"credit": "personal"
 		},
 		"answers": [
 			"عندما مرة أخرى تقول لهم المعلومة",
@@ -55,7 +56,8 @@
 		"prompt": "Question Three?",
 		"color": "0000ff",
 		"media": {
-			"image": "/images/thief.jpg"
+			"image": "http://2tqqt82jmt7v3yb42gsd75a19wd.wpengine.netdna-cdn.com/wp-content/uploads/2015/03/كنجر-2.jpg",
+			"credit": "personal"
 		},
 		"answers": [
 			"اسأل: كم دقيقة لا أقضيها أمام شبكة الإنترنت!",
@@ -63,4 +65,4 @@
 			"عندما تقابلهم مرة أخرى تقول لهم المعلومة الصحيحة"
 		]
 	}]
-};
+}
