@@ -10,7 +10,7 @@ add_filter( 'the_content', function( $content ) {
 		return $content;
 	}
 
-	$quiz = loadQuiz( $post->ID );
+	$quiz = loadQuiz( $post->post_name );
 
 	if( $quiz === null ) {
 		return $content;
