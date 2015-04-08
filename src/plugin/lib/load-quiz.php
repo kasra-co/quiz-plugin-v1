@@ -1,41 +1,50 @@
 <?php
 
-// Returns a post's quiz as an associative array
-function loadQuiz( $postId ) {
+require_once( __DIR__ . '/get-endpoint.php' );
 
-	function fetchArticleQuiz( $endpoint, $postId ) {
-		$articleSlug = getQuizArticleSlugForPost( $postId );
-		$article = httpGetObject( rtrim( $endpoint, '/' ) . '/article/' . $articleSlug );
+// Returns a post's quiz as an associative array
+function loadQuiz( $postSlug ) {
+
+	function fetchArticleQuiz( $endpoint, $postSlug ) {
+		$article = httpGetObject( rtrim( $endpoint, '/' ) . '/article/' . $postSlug );
+
+		if( !$article ) {
+			return null;
+		}
+
 		return $article->quiz;
 	}
 
-	function getQuizArticleSlugForPost( $postId ) {
-		return get_post_meta( $postId, 'quiz-article-slug', true );
-	}
-
 	function httpGetObject( $url ) {
-		$curler = curl_init( $url );
-		curl_setopt( $curler, CURLOPT_HEADER, 0 );
-		curl_setopt( $curler, CURLOPT_HTTPHEADER, [
-			'Accept: application/json',
-			'Accept-Charset: utf-8'
+		$context = stream_context_create([
+			'http' => [
+				'method' => 'GET',
+				'header' => [
+					'Accept: application/json',
+					'Accept-Charset: utf-8'
+				]
+			]
 		]);
-		curl_setopt( $curler, CURLOPT_RETURNTRANSFER, 1 );
-		$response = curl_exec( $curler );
-		curl_close( $curler );
+
+		$response = file_get_contents( $url, false, $context );
+
+		$matches = [];
+		preg_match( '/^\S+ (\d+)/', $http_response_header[ 0 ], $matches );
+		$status = (int) $matches[ 0 ];
+		if( $status !== 200 ) {
+			return null;
+		}
 
 		return json_decode( $response );
 	}
 
-	// get service info
-	$options = get_option( 'menapost-quiz-options', null );
-	$endpoint = $options[ 'quizEndpoint' ];
+	$endpoint = getEndpoint();
 
-	if( $endpoint === null ) {
-		trigger_error( 'Menapost quiz: article endpoint undefined', E_USER_WARNING );
-		return;
+	$article = fetchArticleQuiz( $endpoint, $postSlug );
+
+	if( !$article ) {
+		return null;
 	}
 
-	//return fetchArticleQuiz( $endpoint, $postId );
-	return json_decode( file_get_contents( __DIR__ . '/../config/demo-data.json' ), true );
+	return $article->quiz;
 }
