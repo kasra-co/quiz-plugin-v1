@@ -27,7 +27,7 @@ add_action( 'wp_enqueue_scripts', function() {
 
 	$staticPath = plugin_dir_url( __DIR__ ) . plugin_basename( __DIR__ );
 
-	$jsRevs = json_decode( file_get_contents( $staticPath . '/static/rev-manifest-js.json' ), true );
+	$jsRevs = json_decode( file_get_contents( $staticPath . '/static/rev-manifest-app.json' ), true );
 	wp_enqueue_script( 'quiz-frontend', $staticPath . '/static/' . $jsRevs[ 'quiz-app.min.js' ], [], null, true );
 
 	$cssRevs = json_decode( file_get_contents( $staticPath . '/static/rev-manifest-css.json' ), true );

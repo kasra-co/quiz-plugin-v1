@@ -7,5 +7,6 @@ function renderQuizEditor( $quiz ) {
 	?><div id="quiz-editor">
 		<p>Quiz data in hidden element</p>
 		<input type="hidden" id="quiz" name="quiz" value="<?= $value ?>"/>
+		<input type="file" id="quiz-image" name="quiz-image" />
 	</div><?php
 }
