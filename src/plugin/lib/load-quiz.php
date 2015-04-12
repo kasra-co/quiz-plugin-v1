@@ -26,7 +26,10 @@ function loadQuiz( $postSlug ) {
 			]
 		]);
 
-		$response = file_get_contents( $url, false, $context );
+		$response = @file_get_contents( $url, false, $context );
+		if( $response === false ) {
+			return null;
+		}
 
 		$matches = [];
 		preg_match( '/^\S+ (\d+)/', $http_response_header[ 0 ], $matches );
