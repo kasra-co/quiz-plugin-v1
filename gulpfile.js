@@ -17,11 +17,13 @@ gulp.task( 'watch', [ 'sass', 'config', 'php' ], function() {
 	gulp.watch( 'src/plugin/**/*.php', [ 'php' ]);
 	gulp.watch( 'src/plugin/config/**/*', [ 'config' ]);
 
-	builder( './src/app/index.js', true ).bundle( './dist/static', 'quiz-app.min.js' );
+	builder( './src/app/app.js', 'rev-manifest-app.json', true ).bundle( './dist/static', 'quiz-app.min.js' );
+	builder( './src/app/editor.js', 'rev-manifest-editor.json', true ).bundle( './dist/static', 'quiz-editor.min.js' );
 });
 
 gulp.task( 'build', [ 'sass', 'config', 'php' ], function() {
-	builder( './src/app/index.js', false ).bundle( './dist/static', 'quiz-app.min.js' );
+	builder( './src/app/app.js', 'rev-manifest-editor.json', false ).bundle( './dist/static', 'quiz-app.min.js' );
+	builder( './src/app/editor.js', 'rev-manifest-editor.json', false ).bundle( './dist/static', 'quiz-app.min.js' );
 });
 
 gulp.task( 'sass', function() {
@@ -48,18 +50,16 @@ gulp.task( 'clean', function() {
 	del([ 'dist' ]);
 });
 
-function builder( entry, isDev ) {
+function builder( entry, manifest, isDev ) {
 	var bundler;
 
 	if( isDev ) {
 		bundler = watchify( browserify(
-			'./src/app/index.js',
+			entry,
 			_.extend( watchify.args, { debug: true })
 		));
 	} else {
-		bundler = browserify(
-			'./src/app/index.js'
-		);
+		bundler = browserify( entry );
 	}
 
 	bundler.transform( 'reactify' );
@@ -80,7 +80,7 @@ function builder( entry, isDev ) {
 			.pipe( buffer() )
 			.pipe( rev() )
 			.pipe( gulp.dest( dest ))
-			.pipe( rev.manifest( 'rev-manifest-js.json', { merge: true }) )
+			.pipe( rev.manifest( manifest, { merge: true }) )
 			.pipe( gulp.dest( dest ))
 			.pipe( revDel({ dest: dest }))
 			.pipe( gulp.dest( dest ));
