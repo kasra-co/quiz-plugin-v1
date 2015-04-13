@@ -6,34 +6,31 @@ var watchify = require( 'watchify' );
 var browserify = require( 'browserify' );
 var source = require( 'vinyl-source-stream' );
 var buffer = require( 'vinyl-buffer' );
-var sass = require( 'gulp-sass' );
+var sass = require( 'gulp-ruby-sass' );
 var _ = require( 'lodash' );
 var del = require( 'del' );
 var rev = require( 'gulp-rev' );
 var revDel = require( 'rev-del' );
+var rename = require( 'gulp-rename' );
 
-gulp.task( 'watch', [ 'sass', 'config', 'php' ], function() {
+gulp.task( 'watch', [ 'sass', 'font', 'config', 'php' ], function() {
 	gulp.watch( 'node_modules/quiz/style/**/*.scss', [ 'sass' ]);
 	gulp.watch( 'src/plugin/**/*.php', [ 'php' ]);
 	gulp.watch( 'src/plugin/config/**/*', [ 'config' ]);
 
-	builder( './src/app/app.js', 'rev-manifest-app.json', true ).bundle( './dist/static', 'quiz-app.min.js' );
-	builder( './src/app/editor.js', 'rev-manifest-editor.json', true ).bundle( './dist/static', 'quiz-editor.min.js' );
+	buildJs();
 });
 
-gulp.task( 'build', [ 'sass', 'config', 'php' ], function() {
-	builder( './src/app/app.js', 'rev-manifest-editor.json', false ).bundle( './dist/static', 'quiz-app.min.js' );
-	builder( './src/app/editor.js', 'rev-manifest-editor.json', false ).bundle( './dist/static', 'quiz-app.min.js' );
-});
+gulp.task( 'build', [ 'sass', 'font', 'config', 'php' ], function() { buildJs( true ); });
 
 gulp.task( 'sass', function() {
-	gulp.src( 'node_modules/quiz/style/index.scss' )
-	.pipe( sass() )
-	.pipe( buffer() )
-	.pipe( rev() )
-	.pipe( gulp.dest( 'dist/static' ))
-	.pipe( rev.manifest( 'rev-manifest-css.json', { merge: true }) )
-	.pipe( gulp.dest( 'dist/static' ));
+	buildSass( 'quiz-app.min', 'node_modules/quiz/style/index.scss' );
+	buildSass( 'quiz-editor.min', 'node_modules/quiz-editor/style/index.scss' );
+});
+
+gulp.task( 'font', function() {
+	gulp.src( 'node_modules/quiz-editor/font/**/*' )
+	.pipe( gulp.dest( 'dist/font' ));
 });
 
 gulp.task( 'php', function() {
@@ -50,7 +47,7 @@ gulp.task( 'clean', function() {
 	del([ 'dist' ]);
 });
 
-function builder( entry, manifest, isDev ) {
+function builder( name, entry, isDev ) {
 	var bundler;
 
 	if( isDev ) {
@@ -80,7 +77,7 @@ function builder( entry, manifest, isDev ) {
 			.pipe( buffer() )
 			.pipe( rev() )
 			.pipe( gulp.dest( dest ))
-			.pipe( rev.manifest( manifest, { merge: true }) )
+			.pipe( rev.manifest( 'js-manifest-' + name + '.json', { merge: true }) )
 			.pipe( gulp.dest( dest ))
 			.pipe( revDel({ dest: dest }))
 			.pipe( gulp.dest( dest ));
@@ -90,4 +87,19 @@ function builder( entry, manifest, isDev ) {
 	}
 
 	return { bundle: bundle };
+}
+
+function buildJs( production ) {
+	builder( 'quiz-app', './src/app/app.js', production ).bundle( './dist/static', 'quiz-app.min.js' );
+	builder( 'quiz-editor', './src/app/editor.js', production ).bundle( './dist/static', 'quiz-editor.min.js' );
+}
+
+function buildSass( name, path ) {
+	sass( path )
+	.pipe( buffer() )
+	.pipe( rename( name + '.css' ))
+	.pipe( rev() )
+	.pipe( gulp.dest( 'dist/static' ))
+	.pipe( rev.manifest( 'css-manifest-' + name + '.json', { merge: true }) )
+	.pipe( gulp.dest( 'dist/static' ));
 }

@@ -25,11 +25,11 @@ add_filter( 'the_content', function( $content ) {
 add_action( 'wp_enqueue_scripts', function() {
 	// TODO: check if post is a quiz post before enqueueing quiz scripts
 
-	$staticPath = plugin_dir_url( __DIR__ ) . plugin_basename( __DIR__ );
+	$staticRoute = plugin_dir_url( __DIR__ ) . plugin_basename( __DIR__ );
 
-	$jsRevs = json_decode( file_get_contents( $staticPath . '/static/rev-manifest-app.json' ), true );
-	wp_enqueue_script( 'quiz-frontend', $staticPath . '/static/' . $jsRevs[ 'quiz-app.min.js' ], [], null, true );
+	$jsRevs = json_decode( file_get_contents( $staticRoute . '/static/js-manifest-quiz-app.json' ), true );
+	wp_enqueue_script( 'quiz-frontend', $staticRoute . '/static/' . $jsRevs[ 'quiz-app.min.js' ], [], null, true );
 
-	$cssRevs = json_decode( file_get_contents( $staticPath . '/static/rev-manifest-css.json' ), true );
-	wp_enqueue_style( 'quiz-frontend', $staticPath  . '/static/' . $cssRevs[ 'index.css' ]);
+	$cssRevs = json_decode( file_get_contents( $staticPath . '/static/css-manifest-quiz-app.min.json' ), true );
+	wp_enqueue_style( 'quiz-frontend', $staticRoute  . '/static/' . $cssRevs[ 'quiz-app.min.css' ]);
 });
