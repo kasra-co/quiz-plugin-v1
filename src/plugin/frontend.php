@@ -30,6 +30,6 @@ add_action( 'wp_enqueue_scripts', function() {
 	$jsRevs = json_decode( file_get_contents( $staticRoute . '/static/js-manifest-quiz-app.json' ), true );
 	wp_enqueue_script( 'quiz-frontend', $staticRoute . '/static/' . $jsRevs[ 'quiz-app.min.js' ], [], null, true );
 
-	$cssRevs = json_decode( file_get_contents( $staticPath . '/static/css-manifest-quiz-app.min.json' ), true );
+	$cssRevs = json_decode( file_get_contents( $staticRoute . '/static/css-manifest-quiz-app.min.json' ), true );
 	wp_enqueue_style( 'quiz-frontend', $staticRoute  . '/static/' . $cssRevs[ 'quiz-app.min.css' ]);
 });
