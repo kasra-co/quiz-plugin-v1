@@ -1,29 +1,10 @@
-function fileEventHandler( handler ) {
-	return function( event ) {
-		handler( this.files[ 0 ]);
-	};
-}
+var React = require( "react" );
+var QuizEditor = require( "quiz-editor" ).Quiz;
+var quiz;
 
-function saveImage( file ) {
-	var formData = new FormData();
-	formData.append( "action", "quiz-add-image" );
-	formData.append( "postId", window.postId );
-	formData.append( "question", 0 );
-	formData.append( "file", file );
-	formData.append( "quizImageNonce", window.quizImageNonce );
+React.render( <QuizEditor updateQuiz={ function( newQuiz ) { quiz = newQuiz; }}/>, document.getElementById( "quiz-editor" ));
 
-	var request = new XMLHttpRequest();
-	request.onreadystatechange = function() {
-		if( request.readyState == 4 && request.status == 200 ) {
-			console.log( request.responseText );
-			var response = JSON.parse( request.responseText );
-			window.quizEditorNonce = response.nextNonce;
-		}
-	};
+document.getElementById( "post" ).addEventListener( "submit", function( event ) {
+	$( event.target ).append( "<input type=\"hidden\" name=\"quiz\" value=\"" + JSON.stringify( quiz ) + "\"/>" );
+});
 
-	request.open( "POST", window.ajaxurl, true );
-	request.send( formData );
-}
-
-document.getElementById( "quiz-image" ).addEventListener( "change", fileEventHandler( saveImage ), false );
-console.log( window.postId );
