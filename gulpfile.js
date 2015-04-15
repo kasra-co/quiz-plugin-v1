@@ -16,10 +16,14 @@ gulp.task( 'watch', [ 'sass', 'font', 'config', 'php', 'images' ], function() {
 	gulp.watch( 'src/plugin/**/*.php', [ 'php' ]);
 	gulp.watch( 'src/plugin/config/**/*', [ 'config' ]);
 
-	buildJs();
+	bundleApp();
+	bundleEditor();
 });
 
-gulp.task( 'build', [ 'sass', 'font', 'config', 'php', 'images' ], function() { buildJs( true ); });
+gulp.task( 'build', [ 'sass', 'font', 'config', 'php', 'images' ], function() {
+	bundleApp();
+	bundleEditor();
+});
 
 gulp.task( 'sass', function() {
 	buildSass( 'quiz-app.min', 'node_modules/quiz/style/index.scss' );
@@ -50,46 +54,46 @@ gulp.task( 'clean', function() {
 	del([ 'dist' ]);
 });
 
-function builder( name, entry, isDev ) {
-	var bundler;
+var appBundler = watchify( browserify(
+	'./src/app/app.js',
+	_.extend(
+		watchify.args,
+		{ debug: true }
+	)
+));
 
-	if( isDev ) {
-		bundler = watchify( browserify(
-			entry,
-			_.extend( watchify.args, { debug: true })
-		));
-	} else {
-		bundler = browserify( entry );
-	}
+appBundler.transform( 'reactify' );
+appBundler.transform( 'es6ify' );
 
-	bundler.transform( 'reactify' );
-	bundler.transform( 'es6ify' );
-	bundler.transform({ global: true }, 'uglifyify' );
+appBundler.on( 'update', bundleApp );
+appBundler.on( 'log', gutil.log );
 
-	bundler.on( 'log', gutil.log ); // Help bundler log to the terminal
-	bundler.on( 'error', gutil.log.bind( gutil, 'Browserify error' ));
-
-	function bundle( dest, filename ) {
-		bundler.on( 'update', nextBundle );
-
-		function nextBundle() {
-			gutil.log( 'rebundling ' + filename + ' from ' + entry );
-			return bundler.bundle()
-			.on( 'error', gutil.log.bind( gutil, 'Browserify error' )) // Log errors during build
-			.pipe( source( filename ))
-			.pipe( buffer() )
-			.pipe( gulp.dest( dest ));
-		}
-
-		nextBundle();
-	}
-
-	return { bundle: bundle };
+function bundleApp() {
+	return appBundler.bundle()
+	.on( 'error', gutil.log.bind( gutil, 'Browserify error' ))
+	.pipe( source( 'quiz-app.min.js' ))
+	.pipe( gulp.dest( 'dist/static' ));
 }
 
-function buildJs( production ) {
-	builder( 'quiz-app', './src/app/app.js', production ).bundle( './dist/static', 'quiz-app.min.js' );
-	builder( 'quiz-editor', './src/app/editor.js', production ).bundle( './dist/static', 'quiz-editor.min.js' );
+var editorBundler = watchify( browserify(
+	'./src/app/editor.js',
+	_.extend(
+		watchify.args,
+		{ debug: true }
+	)
+));
+
+editorBundler.transform( 'reactify' );
+editorBundler.transform( 'es6ify' );
+
+editorBundler.on( 'update', bundleEditor );
+editorBundler.on( 'log', gutil.log );
+
+function bundleEditor() {
+	return editorBundler.bundle()
+	.on( 'error', gutil.log.bind( gutil, 'Browserify error' ))
+	.pipe( source( 'quiz-editor.min.js' ))
+	.pipe( gulp.dest( 'dist/static' ));
 }
 
 function buildSass( name, path ) {
