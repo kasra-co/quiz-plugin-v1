@@ -9,11 +9,9 @@ var buffer = require( 'vinyl-buffer' );
 var sass = require( 'gulp-ruby-sass' );
 var _ = require( 'lodash' );
 var del = require( 'del' );
-var rev = require( 'gulp-rev' );
-var revDel = require( 'rev-del' );
 var rename = require( 'gulp-rename' );
 
-gulp.task( 'watch', [ 'sass', 'font', 'config', 'php' ], function() {
+gulp.task( 'watch', [ 'sass', 'font', 'config', 'php', 'images' ], function() {
 	gulp.watch( 'node_modules/quiz/style/**/*.scss', [ 'sass' ]);
 	gulp.watch( 'src/plugin/**/*.php', [ 'php' ]);
 	gulp.watch( 'src/plugin/config/**/*', [ 'config' ]);
@@ -21,7 +19,7 @@ gulp.task( 'watch', [ 'sass', 'font', 'config', 'php' ], function() {
 	buildJs();
 });
 
-gulp.task( 'build', [ 'sass', 'font', 'config', 'php' ], function() { buildJs( true ); });
+gulp.task( 'build', [ 'sass', 'font', 'config', 'php', 'images' ], function() { buildJs( true ); });
 
 gulp.task( 'sass', function() {
 	buildSass( 'quiz-app.min', 'node_modules/quiz/style/index.scss' );
@@ -41,6 +39,11 @@ gulp.task( 'php', function() {
 gulp.task( 'config', function() {
 	gulp.src( 'src/plugin/config/**/*' )
 	.pipe( gulp.dest( 'dist/config' ));
+});
+
+gulp.task( 'images', function() {
+	gulp.src( 'node_modules/quiz-editor/images/**/*' )
+	.pipe( gulp.dest( 'dist/images' ));
 });
 
 gulp.task( 'clean', function() {
@@ -70,16 +73,11 @@ function builder( name, entry, isDev ) {
 		bundler.on( 'update', nextBundle );
 
 		function nextBundle() {
-			gutil.log( 'rebundling' );
+			gutil.log( 'rebundling ' + filename + ' from ' + entry );
 			return bundler.bundle()
 			.on( 'error', gutil.log.bind( gutil, 'Browserify error' )) // Log errors during build
 			.pipe( source( filename ))
 			.pipe( buffer() )
-			.pipe( rev() )
-			.pipe( gulp.dest( dest ))
-			.pipe( rev.manifest( 'js-manifest-' + name + '.json', { merge: true }) )
-			.pipe( gulp.dest( dest ))
-			.pipe( revDel({ dest: dest }))
 			.pipe( gulp.dest( dest ));
 		}
 
@@ -98,8 +96,5 @@ function buildSass( name, path ) {
 	sass( path )
 	.pipe( buffer() )
 	.pipe( rename( name + '.css' ))
-	.pipe( rev() )
-	.pipe( gulp.dest( 'dist/static' ))
-	.pipe( rev.manifest( 'css-manifest-' + name + '.json', { merge: true }) )
 	.pipe( gulp.dest( 'dist/static' ));
 }

@@ -27,9 +27,6 @@ add_action( 'wp_enqueue_scripts', function() {
 
 	$staticRoute = plugin_dir_url( __DIR__ ) . plugin_basename( __DIR__ );
 
-	$jsRevs = json_decode( file_get_contents( $staticRoute . '/static/js-manifest-quiz-app.json' ), true );
-	wp_enqueue_script( 'quiz-frontend', $staticRoute . '/static/' . $jsRevs[ 'quiz-app.min.js' ], [], null, true );
-
-	$cssRevs = json_decode( file_get_contents( $staticRoute . '/static/css-manifest-quiz-app.min.json' ), true );
-	wp_enqueue_style( 'quiz-frontend', $staticRoute  . '/static/' . $cssRevs[ 'quiz-app.min.css' ]);
+	wp_enqueue_script( 'quiz-frontend', $staticRoute . '/static/quiz-app.min.js', [], null, true );
+	wp_enqueue_style( 'quiz-frontend', $staticRoute  . '/static/quiz-app.min.css' );
 });

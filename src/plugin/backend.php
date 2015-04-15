@@ -8,11 +8,8 @@ add_action( 'admin_enqueue_scripts', function( $hook ) {
 
 	$staticRoute = plugin_dir_url( __DIR__ ) . plugin_basename( __DIR__ );
 
-	$jsRevs = json_decode( file_get_contents( $staticRoute . '/static/js-manifest-quiz-editor.json' ), true );
-	wp_enqueue_script( 'quiz-editor', $staticRoute . '/static/' . $jsRevs[ 'quiz-editor.min.js' ], [], null, true );
-
-	$cssRevs = json_decode( file_get_contents( $staticRoute . '/static/css-manifest-quiz-editor.min.json' ), true );
-	wp_enqueue_style( 'quiz-editor', $staticRoute  . '/static/' . $cssRevs[ 'quiz-editor.min.css' ]);
+	wp_enqueue_script( 'quiz-editor', $staticRoute . '/static/quiz-editor.min.js', [], null, true );
+	wp_enqueue_style( 'quiz-editor', $staticRoute  . '/static/quiz-editor.min.css' );
 
 	if( isset( $post )) {
 		wp_localize_script( 'quiz-editor', 'postid', $post->id );
