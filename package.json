@@ -13,7 +13,7 @@
   "author": "Dan Ross <dan.ross@kasra.co>",
   "license": "private",
   "dependencies": {
-    "lodash": "^3.5.0",
+    "lodash": "^3.6.0",
     "quiz": "git+ssh://git@kasra-deploy:menapost/quiz-user-front-end.git",
     "quiz-editor": "git+ssh://git@kasra-deploy:menapost/quiz-editor.git",
     "react": "^0.13.0",

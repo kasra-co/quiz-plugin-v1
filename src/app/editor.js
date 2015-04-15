@@ -1,18 +1,19 @@
 var React = require( "react" );
 var QuizEditor = require( "quiz-editor" ).Quiz;
-var quiz;
+var _ = require( "lodash" );
 
-var quizApp = (
-	<QuizEditor
-		updateQuiz={ function( newQuiz ) {
-			quiz = newQuiz;
-		}}
-	/>
-);
+jQuery( function( $ ) {
+	var quizDataDump = $( "#quiz-data-dump" );
+	var initialQuizData = JSON.parse( _.unescape( quizDataDump.attr( "value" )));
 
-React.render( quizApp, document.getElementById( "quiz-editor" ));
+	var quizApp = (
+		<QuizEditor
+			initialQuiz={ initialQuizData }
+			updateQuiz={ function( newQuiz ) {
+				quizDataDump.attr( "value", JSON.stringify( newQuiz ));
+			}}
+		/>
+	);
 
-document.getElementById( "post" ).addEventListener( "submit", function( event ) {
-	$( event.target ).append( "<input type=\"hidden\" name=\"quiz\" value=\"" + JSON.stringify( quiz ) + "\"/>" );
+	React.render( quizApp, document.getElementById( "quiz-editor" ));
 });
-
