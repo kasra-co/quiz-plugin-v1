@@ -2,8 +2,8 @@
 
 require_once( __DIR__ . '/get-endpoint.php' );
 
-function saveQuiz( $postId, $quiz ) {
-	function httpPostObject( $url, $data ) {
+function saveQuiz( $postSlug, $quiz ) {
+	$httpPostObject = function( $url, $data ) {
 		$context = stream_context_create([
 			'http' => [
 				'method' => 'POST',
@@ -17,13 +17,12 @@ function saveQuiz( $postId, $quiz ) {
 		if( !$response ) {
 			trigger_error( 'Menapost quiz: Failed to save quiz', E_USER_WARNING );
 		}
-	}
+	};
 
-	$post = get_post( $postId );
 	$article = [
-		'slug' => $post->post_name,
+		'slug' => $postSlug,
 		'quiz' => $quiz
 	];
 
-	httpPostObject( getEndpoint() . "/article/quiz-article", $article );
+	$httpPostObject( getEndpoint() . "/article/quiz-article", $article );
 }
