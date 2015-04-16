@@ -2,7 +2,23 @@
 
 require_once( __DIR__ . '/lib/save-quiz.php' );
 
-add_action( 'save_post_post', function( $post_id, $post, $update ) {
+function mediaSaver( $postId ) {
+	return function( $object ) use ( $postId ) {
+		$uri = $object->media->image;
+		$url = $uri;
+
+		if( preg_match( '#^data:(?!//)#', $uri )) {
+			$phpUri = 'data://' . substr( $uri, 5 );
+			$fileInfo = wp_upload_bits( 'uploadedBits.png', null, file_get_contents( $phpUri ));
+			$url = $fileInfo[ 'url' ];
+		}
+
+		$object->media->image = $url;
+		return $object;
+	};
+}
+
+add_action( 'save_post_post', function( $postId, $post, $update ) {
 	if( !isset( $_POST ) || !isset( $_POST[ 'quiz' ] )) {
 		return;
 	}
@@ -11,7 +27,7 @@ add_action( 'save_post_post', function( $post_id, $post, $update ) {
 		return;
 	}
 
-	if( !current_user_can( 'edit_post', $post_id )) {
+	if( !current_user_can( 'edit_post', $postId )) {
 		return;
 	}
 
@@ -26,6 +42,14 @@ add_action( 'save_post_post', function( $post_id, $post, $update ) {
 	if( $quiz === null ) {
 		return;
 	}
+
+	if( !isset( $quiz->questions ) || !isset( $quiz->results )) {
+		trigger_error( 'Quiz: Missing questions or results' );
+		return;
+	}
+
+	$quiz->results = array_map( mediaSaver( $postId ), $quiz->results );
+	$quiz->questions = array_map( mediaSaver( $postId ), $quiz->questions );
 
 	saveQuiz( $post->post_name, $quiz );
 }, 10, 3); // Tell WP that we are using the 3 arg form
