@@ -4,13 +4,15 @@ require_once( __DIR__ . '/get-endpoint.php' );
 
 function saveQuiz( $postSlug, $quiz ) {
 	$httpPostObject = function( $url, $data ) {
-		$context = stream_context_create([
+		$http = [
 			'http' => [
 				'method' => 'POST',
 				'header' => [ 'Content-Type: application/json' ],
-				'content' => json_encode( $data )
+				'content' => wp_unslash( json_encode( $data ))
 			]
-		]);
+		];
+
+		$context = stream_context_create( $http );
 
 		$response = @file_get_contents( $url, false, $context );
 
