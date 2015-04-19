@@ -27,6 +27,6 @@ add_action( 'wp_enqueue_scripts', function() {
 
 	$staticRoute = plugin_dir_url( __DIR__ ) . plugin_basename( __DIR__ );
 
-	wp_enqueue_script( 'quiz-frontend', $staticRoute . '/static/quiz-app.min.js', [], null, true );
+	wp_enqueue_script( 'quiz-frontend', $staticRoute . '/static/quiz-app.min.js', Array(), null, true );
 	wp_enqueue_style( 'quiz-frontend', $staticRoute  . '/static/quiz-app.min.css' );
 });
