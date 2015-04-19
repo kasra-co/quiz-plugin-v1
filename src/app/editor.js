@@ -25,6 +25,38 @@ var quizSchema ={
 	}).required()).required(),
 };
 
+var defaultQuizData = {
+	questions: [{
+		prompt: "",
+		answers: ["", ""],
+		media: {
+			image: null,
+			title: "",
+			caption: "",
+			altText: ""
+		}
+	}],
+	results: [{
+		title: "",
+		text: "",
+		media: {
+			image: null,
+			title: "",
+			caption: "",
+			altText: ""
+		}
+	}, {
+		title: "",
+		text: "",
+		media: {
+			image: null,
+			title: "",
+			caption: "",
+			altText: ""
+		}
+	}]
+};
+
 jQuery( function( $ ) {
 
 	var quizDataDump = $( "#quiz-data-dump" );
@@ -73,5 +105,5 @@ jQuery( function( $ ) {
 		}
 	});
 
-	React.render( <QuizEditorApp initialQuizData={ initialQuizData }/>, document.getElementById( "quiz-editor" ));
+	React.render( <QuizEditorApp initialQuizData={ initialQuizData || defaultQuizData }/>, document.getElementById( "quiz-editor" ));
 });
