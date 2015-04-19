@@ -1,3 +1,4 @@
 {
-	"brand": "menaPOST"
+	"brand": "menaPOST",
+	"errorMessage" : "Incomplete quiz. Quizes must have at least two questions, at least two results, and all fields must be filled in. An image is required for each question and each result."
 }
