@@ -13,6 +13,7 @@ var rename = require( 'gulp-rename' );
 
 gulp.task( 'watch', [ 'sass', 'font', 'config', 'php', 'images' ], function() {
 	gulp.watch( 'node_modules/quiz/style/**/*.scss', [ 'sass' ]);
+	gulp.watch( 'node_modules/quiz-editor/style/**/*.scss', [ 'sass' ]);
 	gulp.watch( 'src/plugin/**/*.php', [ 'php' ]);
 	gulp.watch( 'src/plugin/config/**/*', [ 'config' ]);
 
@@ -27,7 +28,9 @@ gulp.task( 'build', [ 'sass', 'font', 'config', 'php', 'images' ], function() {
 
 gulp.task( 'sass', function() {
 	buildSass( 'quiz-app.min', 'node_modules/quiz/style/index.scss' );
-	buildSass( 'quiz-editor.min', 'node_modules/quiz-editor/style/index.scss' );
+	setTimeout( function() {
+		buildSass( 'quiz-editor.min', 'node_modules/quiz-editor/style/index.scss' );
+	}, 2000 );
 });
 
 gulp.task( 'font', function() {
