@@ -51,41 +51,5 @@ add_action( 'save_post_post', function( $postId, $post, $update ) {
 	$quiz->results = array_map( mediaSaver( $postId ), $quiz->results );
 	$quiz->questions = array_map( mediaSaver( $postId ), $quiz->questions );
 
-	saveQuiz( $post->post_name, $quiz );
+	saveQuiz( $post, $quiz );
 }, 10, 3); // Tell WP that we are using the 3 arg form
-
-add_action( 'wp_ajax_quiz-add-image', function() {
-	/* FIXME: Always invalid
-	if( !check_ajax_referer( -1, 'quizImageNonce', false )) {
-		http_response_code( 403 );
-		die( json_encode([ 'error' => 'invalidNonce' ]));
-	}
-	*/
-
-	if( !current_user_can( 'edit_post', $_POST[ 'postId' ])) {
-		http_response_code( 403 );
-		die( json_encode([ 'error' => 'notAllowed' ]));
-	}
-
-	$theWordFileInAVariableThatwp_handle_uploadCanReferToByReference = 'file';
-	$attachmentId = wp_handle_upload( $theWordFileInAVariableThatwp_handle_uploadCanReferToByReference, $_POST[ 'postId' ]);
-
-	if( is_wp_error( $attachmentId )) {
-		http_response_code( 500 );
-		die;
-	}
-
-	$imageURL = wp_get_attachment_url( $attachmentId );
-
-	$quiz = loadQuiz( $_POST[ 'postId' ]);
-	$post = get_post( $_POST[ 'postId' ]);
-
-	if( !$quiz ) {
-		$quiz = [ 'slug' => $post->slug ];
-	}
-
-	$quiz[ 'questions' ][ $_POST[ 'question' ]][ 'media' ][ 'image' ] = $imageURL;
-	saveQuiz( $post->ID, $quiz );
-
-	die;
-});

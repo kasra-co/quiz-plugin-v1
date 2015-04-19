@@ -11,8 +11,6 @@ define( 'BRAND', 'menaPOST' ); // I keep forgetting the proper capitalization
 
 if( is_admin() ) {
 	require_once( __DIR__ . '/backend.php' );
-	require_once( __DIR__ . '/admin-settings.php' );
-	require_once( __DIR__ . '/admin-settings-page.php' );
 } else {
 	require_once( __DIR__ . '/frontend.php' );
 }

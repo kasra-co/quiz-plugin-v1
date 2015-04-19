@@ -7,7 +7,7 @@ add_action( 'add_meta_boxes', function() {
 
 	$render = function () {
 		global $post;
-		renderQuizEditor( loadQuiz( $post->post_name ));
+		renderQuizEditor( loadQuiz( $post ));
 	};
 
 	add_meta_box( 'quizMeta', __( 'Quiz' ), $render, 'post' );
