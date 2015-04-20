@@ -3,3 +3,4 @@ npm-debug.log
 dist
 .sass-cache/
 *.zip
+fixtures/
