@@ -1,6 +1,6 @@
 # Quiz Adaptor
 
-A Wordpress plugin for displaying quizes and embedding the quiz editor.
+A Wordpress plugin for displaying quizes and embedding the quiz editor. For the deployment plan, see `deployment.md` in the project root. (Bibucket does not support links in repositories, see [6315](https://bitbucket.org/site/master/issue/6315/relative-urls-in-readmemd-files-only-work))
 
 Quizzes are associated by their MongoDB ID with post ids using a foreign key table:
 
