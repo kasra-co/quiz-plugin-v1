@@ -17,13 +17,13 @@ gulp.task( 'watch', [ 'sass', 'font', 'config', 'php', 'images' ], function() {
 	gulp.watch( 'src/plugin/**/*.php', [ 'php' ]);
 	gulp.watch( 'src/plugin/config/**/*', [ 'config' ]);
 
-	bundleApp();
-	bundleEditor();
+	buildApp( true );
+	buildEditor( true );
 });
 
 gulp.task( 'build', [ 'sass', 'font', 'config', 'php', 'images' ], function() {
-	bundleApp();
-	bundleEditor();
+	buildApp();
+	buildEditor();
 });
 
 gulp.task( 'sass', function() {
@@ -57,46 +57,54 @@ gulp.task( 'clean', function() {
 	del([ 'dist' ]);
 });
 
-var appBundler = watchify( browserify(
-	'./src/app/app.js',
-	_.extend(
-		watchify.args,
-		{ debug: true }
-	)
-));
+function buildApp( debug ) {
+	var appBundler = watchify( browserify(
+		'./src/app/app.js',
+		_.extend(
+			watchify.args,
+			{ debug: debug }
+		)
+	));
 
-appBundler.transform( 'reactify' );
-appBundler.transform( 'es6ify' );
+	appBundler.transform( 'reactify' );
+	appBundler.transform( 'es6ify' );
 
-appBundler.on( 'update', bundleApp );
-appBundler.on( 'log', gutil.log );
+	appBundler.on( 'update', bundleApp );
+	appBundler.on( 'log', gutil.log );
 
-function bundleApp() {
-	return appBundler.bundle()
-	.on( 'error', gutil.log.bind( gutil, 'Browserify error' ))
-	.pipe( source( 'quiz-app.min.js' ))
-	.pipe( gulp.dest( 'dist/static' ));
+	function bundleApp() {
+		return appBundler.bundle()
+		.on( 'error', gutil.log.bind( gutil, 'Browserify error' ))
+		.pipe( source( 'quiz-app.min.js' ))
+		.pipe( gulp.dest( 'dist/static' ));
+	}
+
+	bundleApp();
 }
 
-var editorBundler = watchify( browserify(
-	'./src/app/editor.js',
-	_.extend(
-		watchify.args,
-		{ debug: true }
-	)
-));
+function buildEditor( debug ) {
+	var editorBundler = watchify( browserify(
+		'./src/app/editor.js',
+		_.extend(
+			watchify.args,
+			{ debug: debug }
+		)
+	));
 
-editorBundler.transform( 'reactify' );
-editorBundler.transform( 'es6ify' );
+	editorBundler.transform( 'reactify' );
+	editorBundler.transform( 'es6ify' );
 
-editorBundler.on( 'update', bundleEditor );
-editorBundler.on( 'log', gutil.log );
+	editorBundler.on( 'update', bundleEditor );
+	editorBundler.on( 'log', gutil.log );
 
-function bundleEditor() {
-	return editorBundler.bundle()
-	.on( 'error', gutil.log.bind( gutil, 'Browserify error' ))
-	.pipe( source( 'quiz-editor.min.js' ))
-	.pipe( gulp.dest( 'dist/static' ));
+	function bundleEditor() {
+		return editorBundler.bundle()
+		.on( 'error', gutil.log.bind( gutil, 'Browserify error' ))
+		.pipe( source( 'quiz-editor.min.js' ))
+		.pipe( gulp.dest( 'dist/static' ));
+	}
+
+	bundleEditor();
 }
 
 function buildSass( name, path ) {
