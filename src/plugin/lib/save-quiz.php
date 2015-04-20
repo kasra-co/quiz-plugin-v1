@@ -56,10 +56,10 @@ function httpPutObject( $url, $data ) {
 
 function saveQuiz( $post, $quiz ) {
 
-	$article = [
+	$article = Array(
 		'slug' => $post->post_name,
 		'quiz' => $quiz
-	];
+	);
 
 	$slug = $post->post_name;
 	$response = httpPutObject( getEndpoint() . "/article/$slug/quiz", $article );
