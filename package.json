@@ -1,6 +1,6 @@
 {
   "name": "quiz-adaptor",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "A React based quiz app, packaged as a Wordpress plugin.",
   "main": "index.js",
   "scripts": {
