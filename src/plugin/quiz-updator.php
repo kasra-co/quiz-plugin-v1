@@ -31,6 +31,10 @@ add_action( 'save_post_post', function( $postId, $post, $update ) {
 		return;
 	}
 
+	if( $_POST[ 'quiz' ] === 'null' ) {
+		return;
+	}
+
 	$quiz = json_decode( htmlspecialchars_decode( wp_unslash( $_POST[ 'quiz' ]), ENT_COMPAT ));
 
 	if( !isset( $quiz )) {
