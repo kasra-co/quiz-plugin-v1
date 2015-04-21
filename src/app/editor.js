@@ -18,7 +18,7 @@ var quizSchema ={
 		media: mediaSchema,
 		answers: Joi.array().items(Joi.string().required()).required(),
 	}).required()).required(),
-	results: Joi.array().items(Joi.object().keys({
+	results: Joi.array().min(2).max(9).items(Joi.object().keys({
 		title: Joi.string().required(),
 		text: Joi.string().required(),
 		media: mediaSchema
@@ -59,13 +59,11 @@ var defaultQuizData = {
 
 jQuery( function( $ ) {
 
-	var quizDataDump = $( "#quiz-data-dump" );
-	var initialQuizData = JSON.parse( _.unescape( quizDataDump.attr( "value" )));
+	var $quizDataDump = $( "#quiz-data-dump" );
+	var initialQuizData = JSON.parse( _.unescape( $quizDataDump.attr( "value" )));
 
 	var QuizEditorApp = React.createClass({
 		render: function() {
-
-			console.log( this.state );
 
 			var errorMessage;
 			if( this.state.invalid ) {
@@ -89,9 +87,7 @@ jQuery( function( $ ) {
 								quiz: quiz
 							});
 
-							if( !result.error ) {
-								quizDataDump.attr( "value", JSON.stringify( quiz ));
-							}
+							$quizDataDump.attr( "value", JSON.stringify( quiz ));
 						}.bind( this )} />
 				</div>
 			);
@@ -105,5 +101,30 @@ jQuery( function( $ ) {
 		}
 	});
 
-	React.render( <QuizEditorApp initialQuizData={ initialQuizData || defaultQuizData }/>, document.getElementById( "quiz-editor" ));
+	function changed( state ) {
+		return !_.isEqual( initialQuizData, state );
+	}
+
+	function isValid( state ) {
+		var result = Joi.validate( state, quizSchema ).error;
+		return !!result.error;
+	}
+
+	var $form = $( "#post" );
+	$form.submit( function( event ) {
+		var state = JSON.parse( $quizDataDump.val() );
+
+		console.log( changed( state ), !isValid( state ));
+		console.log( initialQuizData, state);
+
+		if( changed( state ) && !isValid( state )) {
+			if( confirm( labels.confirmDropChanges )) {
+				$quizDataDump.attr( "value", JSON.stringify( initialQuizData ));
+			} else {
+				event.preventDefault();
+			}
+		}
+	});
+
+	React.render( <QuizEditorApp initialQuizData={ _.cloneDeep( initialQuizData ) || defaultQuizData }/>, document.getElementById( "quiz-editor" ));
 });

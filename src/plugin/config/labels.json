@@ -1,4 +1,5 @@
 {
 	"brand": "menaPOST",
-	"errorMessage" : "Incomplete quiz. Quizes must have at least two questions, at least two results, and all fields must be filled in. An image is required for each question and each result."
+	"errorMessage" : "الاختبار غير كامل. عدد الأسئلة المسموح هو 2-10 أسئلة وعدد النتائج المسموح هو 2-9 نتائج يجب ان تكون جميع الحقول كاملة البيانات. كل سؤال او نتيجة لا بد ان يحتوي على صورة.",
+	"confirmDropChanges": "الاختبار غير كامل. حفظ الاختبار وهو غير كامل يؤدي الى فقد كل البيانات. هل انت متأكد من الرغبة في الحفظ الآن؟"
 }
