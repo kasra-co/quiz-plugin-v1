@@ -80,7 +80,7 @@ jQuery( function( $ ) {
 				<div>
 					{ errorMessage }
 					<QuizEditor
-						quiz = { this.state.quiz }
+						quiz={ this.state.quiz }
 						updateQuiz={ function( quiz ) {
 							var result = Joi.validate( quiz, quizSchema );
 

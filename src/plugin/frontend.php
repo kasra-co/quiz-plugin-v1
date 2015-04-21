@@ -17,7 +17,9 @@ add_filter( 'the_content', function( $content ) {
 	}
 
 	wp_localize_script( 'quiz-frontend', 'quizContent', $quiz);
-	wp_localize_script( 'quiz-frontend', 'quizTitle', $post->post_title);
+	wp_localize_script( 'quiz-frontend', 'quizTitle', $post->post_title );
+	wp_localize_script( 'quiz-frontend', 'shortUrl', wp_get_shortlink( $post->ID ));
+	wp_localize_script( 'quiz-frontend', 'siteUrl', site_url() );
 
 	return $content . '<div id="quiz-mount-point"></div>';
 });
