@@ -26,35 +26,37 @@ var quizSchema ={
 };
 
 var defaultQuizData = {
-	questions: [{
-		prompt: "",
-		answers: ["", ""],
-		media: {
-			image: null,
+	draft: {
+		questions: [{
+			prompt: "",
+			answers: ["", ""],
+			media: {
+				image: null,
+				title: "",
+				caption: "",
+				altText: ""
+			}
+		}],
+		results: [{
 			title: "",
-			caption: "",
-			altText: ""
-		}
-	}],
-	results: [{
-		title: "",
-		text: "",
-		media: {
-			image: null,
+			text: "",
+			media: {
+				image: null,
+				title: "",
+				caption: "",
+				altText: ""
+			}
+		}, {
 			title: "",
-			caption: "",
-			altText: ""
-		}
-	}, {
-		title: "",
-		text: "",
-		media: {
-			image: null,
-			title: "",
-			caption: "",
-			altText: ""
-		}
-	}]
+			text: "",
+			media: {
+				image: null,
+				title: "",
+				caption: "",
+				altText: ""
+			}
+		}]
+	}
 };
 
 jQuery( function( $ ) {
