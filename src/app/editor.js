@@ -114,9 +114,6 @@ jQuery( function( $ ) {
 	$form.submit( function( event ) {
 		var state = JSON.parse( $quizDataDump.val() );
 
-		console.log( changed( state ), !isValid( state ));
-		console.log( initialQuizData, state);
-
 		if( changed( state ) && !isValid( state )) {
 			if( confirm( labels.confirmDropChanges )) {
 				$quizDataDump.attr( "value", JSON.stringify( initialQuizData ));
