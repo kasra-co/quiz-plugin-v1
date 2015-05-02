@@ -87,7 +87,19 @@ jQuery( function( $ ) {
 								quiz: quiz
 							});
 
-							$quizDataDump.attr( "value", JSON.stringify( quiz ));
+							var articleQuiz;
+							if( result.error ) {
+								articleQuiz = {
+									"draft": quiz,
+									"public": initialQuizData.public
+								};
+							} else {
+								articleQuiz = {
+									"public": quiz,
+								};
+							}
+
+							$quizDataDump.attr( "value", JSON.stringify( articleQuiz ));
 						}.bind( this )} />
 				</div>
 			);
@@ -96,13 +108,16 @@ jQuery( function( $ ) {
 		getInitialState: function() {
 			return {
 				invalid: false,
-				quiz: this.props.initialQuizData
+				quiz: this.props.initialQuizData && this.props.initialQuizData.draft || this.props.initialQuizData.public
 			};
 		}
 	});
 
 	function changed( state ) {
-		return !_.isEqual( initialQuizData, state );
+		return !(
+			( initialQuizData && initialQuizData.public && !_.isEqual( initialQuizData.public, state )) ||
+			!_.isEqual( defaultQuizData, state )
+		);
 	}
 
 	function isValid( state ) {
@@ -114,12 +129,8 @@ jQuery( function( $ ) {
 	$form.submit( function( event ) {
 		var state = JSON.parse( $quizDataDump.val() );
 
-		if( changed( state ) && !isValid( state )) {
-			if( confirm( labels.confirmDropChanges )) {
-				$quizDataDump.attr( "value", JSON.stringify( initialQuizData ));
-			} else {
-				event.preventDefault();
-			}
+		if( changed( state )) {
+			$quizDataDump.attr( "value", JSON.stringify( initialQuizData ));
 		}
 	});
 

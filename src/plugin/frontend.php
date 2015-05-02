@@ -12,11 +12,11 @@ add_filter( 'the_content', function( $content ) {
 
 	$quiz = loadQuiz( $post );
 
-	if( $quiz === null ) {
+	if( $quiz === null || !isset( $quiz->public ) || !$quiz->public ) {
 		return $content;
 	}
 
-	wp_localize_script( 'quiz-frontend', 'quizContent', $quiz);
+	wp_localize_script( 'quiz-frontend', 'quizContent', $quiz->public );
 	wp_localize_script( 'quiz-frontend', 'quizTitle', $post->post_title );
 	wp_localize_script( 'quiz-frontend', 'shortUrl', wp_get_shortlink( $post->ID ));
 	wp_localize_script( 'quiz-frontend', 'siteUrl', site_url() );

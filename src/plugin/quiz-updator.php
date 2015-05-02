@@ -9,7 +9,7 @@ function mediaSaver( $postId ) {
 
 		if( preg_match( '#^data:(?!//)#', $uri )) {
 			$phpUri = 'data://' . substr( $uri, 5 );
-			$fileInfo = wp_upload_bits( 'uploadedBits.png', null, file_get_contents( $phpUri ));
+			$fileInfo = wp_upload_bits( 'uploadedBits.png', null, file_get_contents( $phpUri )); // TODO: Use image
 			$url = $fileInfo[ 'url' ];
 		}
 
@@ -47,8 +47,15 @@ add_action( 'save_post_post', function( $postId, $post, $update ) {
 		return;
 	}
 
-	$quiz->results = array_map( mediaSaver( $postId ), $quiz->results );
-	$quiz->questions = array_map( mediaSaver( $postId ), $quiz->questions );
+	if( isset( $quiz->draft )) {
+		$quiz->draft->results = array_map( mediaSaver( $postId ), $quiz->draft->results );
+		$quiz->draft->questions = array_map( mediaSaver( $postId ), $quiz->draft->questions );
+	}
+
+	if( isset( $quiz->public )) {
+		$quiz->public->results = array_map( mediaSaver( $postId ), $quiz->public->results );
+		$quiz->public->questions = array_map( mediaSaver( $postId ), $quiz->public->questions );
+	}
 
 	saveQuiz( $post, $quiz );
 }, 10, 3); // Tell WP that we are using the 3 arg form
