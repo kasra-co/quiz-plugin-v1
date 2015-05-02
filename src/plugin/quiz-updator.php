@@ -52,9 +52,9 @@ add_action( 'save_post_post', function( $postId, $post, $update ) {
 		$quiz->draft->questions = array_map( mediaSaver( $postId ), $quiz->draft->questions );
 	}
 
-	if( isset( $quiz->public )) {
-		$quiz->public->results = array_map( mediaSaver( $postId ), $quiz->public->results );
-		$quiz->public->questions = array_map( mediaSaver( $postId ), $quiz->public->questions );
+	if( isset( $quiz->published )) {
+		$quiz->published->results = array_map( mediaSaver( $postId ), $quiz->published->results );
+		$quiz->published->questions = array_map( mediaSaver( $postId ), $quiz->published->questions );
 	}
 
 	saveQuiz( $post, $quiz );

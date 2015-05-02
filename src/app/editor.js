@@ -64,10 +64,10 @@ jQuery( function( $ ) {
 	var $quizDataDump = $( "#quiz-data-dump" );
 	var initialQuizData = JSON.parse( _.unescape( $quizDataDump.attr( "value" )));
 
-	// If initialQuizData is a quiz, not a container of a draft / public quiz, then it was created before we introduced draft / public quizes. Assume that it is valid and load it as a public quiz.
-	if( initialQuizData && !initialQuizData.public && !initialQuizData.draft ) {
+	// If initialQuizData is a quiz, not a container of a draft / published quiz, then it was created before we introduced draft / published quizes. Assume that it is valid and load it as a published quiz.
+	if( initialQuizData && !initialQuizData.published && !initialQuizData.draft ) {
 		initialQuizData = {
-			public: initialQuizData
+			published: initialQuizData
 		};
 	}
 
@@ -87,7 +87,7 @@ jQuery( function( $ ) {
 				errorMessage = (
 					<div className="error">
 						<p>{ labels.errorMessage }</p>
-						{ initialQuizData.public? renderPublishedQuizControls(): renderUnpublishedQuizControls }
+						{ initialQuizData && initialQuizData.published? renderPublishedQuizControls(): renderUnpublishedQuizControls }
 					</div>
 				);
 			}
@@ -109,11 +109,14 @@ jQuery( function( $ ) {
 							if( result.error ) {
 								articleQuiz = {
 									"draft": quiz,
-									"public": initialQuizData.public
 								};
+
+								if( initialQuizData && initialQuizData.published ) {
+									articleQuiz.published = initialQuizData.published;
+								}
 							} else {
 								articleQuiz = {
-									"public": quiz,
+									"published": quiz,
 								};
 							}
 
@@ -126,12 +129,12 @@ jQuery( function( $ ) {
 		getInitialState: function() {
 			return {
 				invalid: false,
-				quiz: this.props.initialQuizData && this.props.initialQuizData.draft || this.props.initialQuizData.public
+				quiz: this.props.initialQuizData.draft || this.props.initialQuizData.published
 			};
 		},
 
 		loadPublic: function() {
-			this.setState( initialQuizData.public );
+			this.setState( initialQuizData.published );
 		},
 
 		clear: function() {
@@ -141,7 +144,7 @@ jQuery( function( $ ) {
 
 	function changed( state ) {
 		return !(
-			( initialQuizData && initialQuizData.public && !_.isEqual( initialQuizData.public, state )) ||
+			( initialQuizData && initialQuizData.published && !_.isEqual( initialQuizData.published, state )) ||
 			!_.isEqual( defaultQuizData, state )
 		);
 	}
