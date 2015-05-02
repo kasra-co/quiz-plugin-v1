@@ -87,7 +87,7 @@ jQuery( function( $ ) {
 				errorMessage = (
 					<div className="error">
 						<p>{ labels.errorMessage }</p>
-						{ initialQuizData && initialQuizData.published? renderPublishedQuizControls(): renderUnpublishedQuizControls }
+						{ initialQuizData && initialQuizData.published? renderPublishedQuizControls(): renderUnpublishedQuizControls() }
 					</div>
 				);
 			}
@@ -134,11 +134,17 @@ jQuery( function( $ ) {
 		},
 
 		loadPublic: function() {
-			this.setState( initialQuizData.published );
+			this.replaceState({
+				invalid: false,
+				quiz: _.cloneDeep( initialQuizData.published )
+			});
 		},
 
 		clear: function() {
-			this.setState( defaultQuizData );
+			this.replaceState({
+				invalid: false,
+				quiz: _.cloneDeep( defaultQuizData.draft )
+			});
 		}
 	});
 
@@ -163,5 +169,5 @@ jQuery( function( $ ) {
 		}
 	});
 
-	React.render( <QuizEditorApp initialQuizData={ _.cloneDeep( initialQuizData ) || defaultQuizData }/>, document.getElementById( "quiz-editor" ));
+	React.render( <QuizEditorApp initialQuizData={ _.cloneDeep( initialQuizData || defaultQuizData )}/>, document.getElementById( "quiz-editor" ));
 });
