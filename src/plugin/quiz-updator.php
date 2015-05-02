@@ -47,11 +47,6 @@ add_action( 'save_post_post', function( $postId, $post, $update ) {
 		return;
 	}
 
-	if( !isset( $quiz->questions ) || !isset( $quiz->results )) {
-		trigger_error( 'Quiz: Missing questions or results' );
-		return;
-	}
-
 	$quiz->results = array_map( mediaSaver( $postId ), $quiz->results );
 	$quiz->questions = array_map( mediaSaver( $postId ), $quiz->questions );
 
