@@ -64,12 +64,21 @@ jQuery( function( $ ) {
 
 	var QuizEditorApp = React.createClass({
 		render: function() {
-
 			var errorMessage;
+
+			var renderPublishedQuizControls = function() {
+				return <button onClick={ this.loadPublic } type="button">{ labels.reset }</button>;
+			}.bind( this );
+
+			var renderUnpublishedQuizControls = function() {
+				return <button onClick={ this.clear } type="button">{ labels.cancel }</button>;
+			}.bind( this );
+
 			if( this.state.invalid ) {
 				errorMessage = (
 					<div className="error">
 						<p>{ labels.errorMessage }</p>
+						{ initialQuizData.public? renderPublishedQuizControls(): renderUnpublishedQuizControls }
 					</div>
 				);
 			}
@@ -110,6 +119,14 @@ jQuery( function( $ ) {
 				invalid: false,
 				quiz: this.props.initialQuizData && this.props.initialQuizData.draft || this.props.initialQuizData.public
 			};
+		},
+
+		loadPublic: function() {
+			this.setState( initialQuizData.public );
+		},
+
+		clear: function() {
+			this.setState( defaultQuizData );
 		}
 	});
 
