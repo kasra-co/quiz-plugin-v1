@@ -62,6 +62,13 @@ jQuery( function( $ ) {
 	var $quizDataDump = $( "#quiz-data-dump" );
 	var initialQuizData = JSON.parse( _.unescape( $quizDataDump.attr( "value" )));
 
+	// If initialQuizData is a quiz, not a container of a draft / public quiz, then it was created before we introduced draft / public quizes. Assume that it is valid and load it as a public quiz.
+	if( initialQuizData && !initialQuizData.public && !initialQuizData.draft ) {
+		initialQuizData = {
+			public: initialQuizData
+		};
+	}
+
 	var QuizEditorApp = React.createClass({
 		render: function() {
 			var errorMessage;
