@@ -1,6 +1,6 @@
 # Quiz Adaptor
 
-A Wordpress quiz plugin. This is a replacement for the "WP My Quiz" plugin, which can be found in old (Pre May 20015) versions of the kasra.co codebase. It integrates the [Kasra quiz app](https://bitbucket.org/menapost/quiz-user-front-end), the [Kasra quiz editor](https://bitbucket.org/menapost/quiz-editor), and the [Kasra WordPress site](https://bitbucket.org/menapost/kasra-wp).
+A Wordpress quiz plugin. This is a replacement for the "WP My Quiz" plugin, which can be found in old (Pre May 2015) versions of the kasra.co codebase. It integrates the [Kasra quiz app](https://bitbucket.org/menapost/quiz-user-front-end), the [Kasra quiz editor](https://bitbucket.org/menapost/quiz-editor), and the [Kasra WordPress site](https://bitbucket.org/menapost/kasra-wp).
 
 If you find issues or have feature requests, please either file them in the relevant project's issue tracker or file them with the quiz adaptor issue tracker if you are unsure where to file it. If you do not have access to the issue tracker, please ping Dan in the Slack #dev room. If you do not have access to Slack (Are you even part of the Kasra project?) then email Dan: daniel.ross@kasra.co.
 
