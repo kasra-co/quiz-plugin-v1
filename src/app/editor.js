@@ -106,7 +106,7 @@ jQuery( function( $ ) {
 							});
 
 							var articleQuiz;
-							if( result.error ) {
+							if( result.error && !initialQuizData.legacy ) {
 								articleQuiz = {
 									"draft": quiz,
 								};
@@ -118,6 +118,10 @@ jQuery( function( $ ) {
 								articleQuiz = {
 									"published": quiz,
 								};
+							}
+
+							if( initialQuizData.legacy ) {
+								articleQuiz.legacy = true;
 							}
 
 							$quizDataDump.attr( "value", JSON.stringify( articleQuiz ));
