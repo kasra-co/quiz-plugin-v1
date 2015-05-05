@@ -1,84 +1,59 @@
 # Quiz Adaptor
 
-A Wordpress plugin for displaying quizes and embedding the quiz editor. For the deployment plan, see `deployment.md` in the project root. (Bibucket does not support links in repositories, see [6315](https://bitbucket.org/site/master/issue/6315/relative-urls-in-readmemd-files-only-work))
+A Wordpress quiz plugin. This is a replacement for the "WP My Quiz" plugin, which can be found in old (Pre May 20015) versions of the kasra.co codebase. It integrates the [Kasra quiz app](https://bitbucket.org/menapost/quiz-user-front-end), the [Kasra quiz editor](https://bitbucket.org/menapost/quiz-editor), and the [Kasra WordPress site](https://bitbucket.org/menapost/kasra-wp).
 
-Quizzes are associated by their MongoDB ID with post ids using a foreign key table:
+If you find issues or have feature requests, please either file them in the relevant project's issue tracker or file them with the quiz adaptor issue tracker if you are unsure where to file it. If you do not have access to the issue tracker, please ping Dan in the Slack #dev room. If you do not have access to Slack (Are you even part of the Kasra project?) then email Dan: daniel.ross@kasra.co.
 
-post_id                   | quiz_id
---------------------------|--------
-int (primary key, unique) | varchar(32) (unique)
+Issues and feature requests should be replicated into the sprint backlog, until Atlassian improves Bitbucket integration with Jira, or someone schools Dan on how to Atlassian.
 
-See the [quiz service](https://bitbucket.org/menapost/quiz-service) for the quiz schema.
+## Usage
 
-## API
+### Writing a New Quiz Article
 
-Most requests are simply piped to the appropriate route on the quiz service, after validating that the user has the correct permissions. All requests should send and expect `application/json`, unless specified otherwise.
+Start writing a quiz object in the "Quiz" meta box on the WordPress post editor. Any article that has quiz data is considered to be a quiz article. Quiz articles can be saved, published and scheduled for publishing by users with the appropriate permissions. Quiz articles may have a "draft" quiz and a "published" quiz.
 
-Endpoint: `/wp-quiz`
+When a quiz is being edited, a validation message is shown explaining the criteria required for a valid quiz:
 
-Route | Description | Returns
---|--|--
-`POST /quiz/:postId` | Save a new quiz and associate it with the `:postId` post. | `201 Created`: Quiz object, `404 Not Found` if the post does not exist (quizzes must be associated with a post)
-`GET /quiz/:postId` | | `200 OK` Quiz object, `404 Not Found`
-`PUT /quiz/:postId` | Replace a quiz | `201 Created`: Quiz object
-`POST /quiz/result/:quizId/:userId` | Create a result post for a user | `201 Created`: post url
+- All fields filled in, including images
+- At least two results
+- At least one question
 
-## Adaptor Front End
+Each result and each question has an image associated with it. When a new image is selected, it is opened in a crop tool. The [crop tool](https://bitbucket.org/menapost/selectrect) outputs a cropped version of the selected image, which is saved in the image field of the media object as an optimized JPG, encoded as a base64 data URI.
 
-A WP data model is provided that acts as a facade to hide the extra requirements imposed by Wordpress integration. When using this module to handle all communication with the server, the client does not need to know whether it is talking to the WP adaptor or to the new article service.
+### Publishing a Quiz Article
 
-The model's API is described in the quiz-editor documentation.
+Articles having an invalid quiz can be saved and published. However, the invalid quiz is saved as a draft, and not shown on the front end. If the article had a valid quiz previously, then that will still be shown on the front end, until the draft quiz is valid.
 
-The extra WP related data needed by the facade implementation should be embedded in a global object in a script tag in the rendered page:
+When a valid quiz is saved, it is saved as the published quiz, and the draft quiz is removed.
 
-```php
-<script>
-	wpQuizData = {
-		postId: '<?= $post.ID ?>';
-	}
-</script>
+When loading a quiz article in the editor, the draft quiz is loaded, if one exists. If not, then the published quiz is loaded, if one exists. When editing an article that has no quiz data, the quiz editor shows an empty, minimal quiz: two empty results and one empty question.
+
+### Editing an Old Quiz Article
+
+Quiz articles that were created using the old WP My Quiz plugin should be loaded in the quiz editor; they have been migrated to the new format on [kasra.staging.wpengine.com]() (Note: update this after final migration on kasra.co).
+
+Validation rules are different for legacy quizzes. The same criteria that are applied to new quizzes are applied to legacy quizzes, and the same instructional error message is shown when an invalid quiz is being edited. However, when any legacy quiz article is being saved, the quiz is saved as a published version, not a draft. This is because legacy quizzes were not validated, and may be missing required information. Requiring an editor to fill all fields in order to make any change to a legacy quiz would either encourage editors to add junk data to pass validation, or discourage them from making incremental fixes to legacy quizes.
+
+## Implementation
+
+Quizzes are stored as a JSON blob in `wp_postmeta`.
+
+```
+{
+	draft: <quiz object, optional>,
+	published: <quiz object, optional>,
+	legacy: boolean
+}
 ```
 
-The quiz data can then be requested from the front end and used to render the quiz editor, in a page template provided by this adaptor. This adaptor will pass a `hostAdaptor` object to the QuizEditor component, which contains methods for communicating with the backend in a generic way. This saves the quiz module from having to know what backend it is talking to.
+See the [quiz service](https://bitbucket.org/menapost/quiz-service) for the quiz schema. Note that the quiz service is not currently in use.
 
-```javascript
-request.get( '/quiz/' + window.WPQuizData.post_id )
-.set( 'Accept', 'application/json' )
-.end( function( err, res ) {
-	React.render( <QuizEditor initialQuiz={ res.body.quiz }, hostAdaptor={ WPHostAdaptor }/>, document.getElementById( 'the-quiz-editor-box' ));
-});
+### Editor
 
-// Try to keep WP adaptor API specific logic out of the actual quiz editor module. The quiz editor should just export a QuizEditor component for us to render here.
-var hostAdaptor = {
-	saver: function( done ) {
-		return function( quiz ) {
-			var method = quiz._id? 'PUT', 'POST';
+Quiz data is saved in a `save_post_post` [action](https://codex.wordpress.org/Plugin_API/Action_Reference/save_post). If a quiz object is present, then the article is a quiz article, and the quiz data is saved.
 
-			request[ method ]( '/quiz/' + window.WPQuizData.post_id )
-			.set( 'ContentType', 'application/json' )
-			.end( done );
-		}
-	}
-};
-```
+When saving a quiz object, image URLs are scanned for data URIs, which are base64 encoded JPG images. When these are found, they are saved as files under `wp-content/uploads/<year>/<month>`. The image URL is then replaced with the URL of the saved file.
 
-The quiz editor actions should use the hostAdaptor functions for server communication:
+### Front End App
 
-```javascript
-var save = Reflux.createAction({
-	asyncResult: true,
-	preEmit: function( quiz ) {
-		hostAdaptor.saver( function( error, result ) {
-			if( error ) {
-				return this.failed( error ); // A child action of any asyncResult action
-			}
-
-			this.completed( result.body );
-		}.bind( this ))( quiz );
-	}
-});
-```
-
-## WP Post Editor Block
-
-A replacement for the current quiz editor block in the WP post editor. Embeds the new quiz editor and provides the facade for communication with the adaptor, which communicates with the new article service.
+When a quiz article is viewed, the quiz app loads the published version of the article's quiz. It allows the user to fill out the quiz once, and then displays a result. The result can be shared on Twitter and Facebook, which posts a card / snippet that links back to the article.
