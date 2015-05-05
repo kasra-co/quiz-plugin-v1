@@ -8,6 +8,12 @@ Issues and feature requests should be replicated into the sprint backlog, until 
 
 ## Usage
 
+### Taking a Quiz
+
+The quiz app allows the user to fill out the quiz once, and then displays a result. The result can be shared on Twitter and Facebook, which posts a story / tweet that links back to the article.
+
+Once the last question has been answered, the quiz is complete, and responses cannot be changed. To retake the quiz, refresh the page.
+
 ### Writing a New Quiz Article
 
 Start writing a quiz object in the "Quiz" meta box on the WordPress post editor. Any article that has quiz data is considered to be a quiz article. Quiz articles can be saved, published and scheduled for publishing by users with the appropriate permissions. Quiz articles may have a "draft" quiz and a "published" quiz.
@@ -56,4 +62,6 @@ When saving a quiz object, image URLs are scanned for data URIs, which are base6
 
 ### Front End App
 
-When a quiz article is viewed, the quiz app loads the published version of the article's quiz. It allows the user to fill out the quiz once, and then displays a result. The result can be shared on Twitter and Facebook, which posts a card / snippet that links back to the article.
+When a quiz article is viewed, the quiz app loads the published version of the article's quiz, if one exists.
+
+Sharing features are simply links to Facebook and Twitter endpoints, that contain quiz result info as GET parameters. 3rd party scripts, provided by those social networks, handle click actions on those links.
