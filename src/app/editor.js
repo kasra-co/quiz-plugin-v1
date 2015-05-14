@@ -87,7 +87,7 @@ jQuery( function( $ ) {
 				errorMessage = (
 					<div className="error">
 						<p>{ labels.errorMessage }</p>
-						{ initialQuizData && initialQuizData.published? renderPublishedQuizControls(): renderUnpublishedQuizControls() }
+						{ this.props.initialQuizData.published? renderPublishedQuizControls(): renderUnpublishedQuizControls() }
 					</div>
 				);
 			}
@@ -106,13 +106,13 @@ jQuery( function( $ ) {
 							});
 
 							var articleQuiz;
-							if( result.error && !initialQuizData.legacy ) {
+							if( result.error && !this.props.initialQuizData.legacy ) {
 								articleQuiz = {
 									"draft": quiz,
 								};
 
-								if( initialQuizData && initialQuizData.published ) {
-									articleQuiz.published = initialQuizData.published;
+								if( initialQuizData && this.props.initialQuizData.published ) {
+									articleQuiz.published = this.props.initialQuizData.published;
 								}
 							} else {
 								articleQuiz = {
@@ -120,7 +120,7 @@ jQuery( function( $ ) {
 								};
 							}
 
-							if( initialQuizData.legacy ) {
+							if( this.props.initialQuizData.legacy ) {
 								articleQuiz.legacy = true;
 							}
 
