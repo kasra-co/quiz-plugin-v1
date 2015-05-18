@@ -1,6 +1,6 @@
 <?php
 
-$title = __( BRAND . ' Quiz Settings' );
+$title = __( QUIZ_ADAPTOR_BRAND . ' Quiz Settings' );
 
 $renderAdminSettingsControls = function () use ( $title ) { ?>
 	<div>

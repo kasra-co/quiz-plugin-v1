@@ -6,8 +6,7 @@ Version: 0.1.0
 Author: Dan Ross, menaPOST
 */
 
-define( 'VERSION', '0.1.0' );
-define( 'BRAND', 'menaPOST' ); // I keep forgetting the proper capitalization
+define( 'QUIZ_ADAPTOR_BRAND', 'Kasra' );
 
 if( is_admin() ) {
 	require_once( __DIR__ . '/backend.php' );
