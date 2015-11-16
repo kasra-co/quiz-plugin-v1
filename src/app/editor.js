@@ -73,6 +73,7 @@ jQuery( function( $ ) {
 
 	var QuizEditorApp = React.createClass({
 		render: function() {
+			console.log( this.state.quiz );
 			var errorMessage;
 
 			var renderPublishedQuizControls = function() {
@@ -126,6 +127,17 @@ jQuery( function( $ ) {
 
 							$quizDataDump.attr( "value", JSON.stringify( articleQuiz ));
 						}.bind( this )} />
+						<div>
+							<button type="button" onClick={() => {
+
+								$quizDataDump.attr( "value", JSON.stringify({
+									draft: _.cloneDeep(this.state.quiz),
+									published: _.cloneDeep(this.state.quiz)
+								}));
+							}}>Force the quiz to update on the front end</button>
+							<p>because dev is too busy with v2 to to troubleshoot the real problem, or to keep updating quizzes manually</p>
+							<p>You will still need to hit "update" or "publish" for your changes to take effect.</p>
+						</div>
 				</div>
 			);
 		},
