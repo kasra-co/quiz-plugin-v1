@@ -73,7 +73,6 @@ jQuery( function( $ ) {
 
 	var QuizEditorApp = React.createClass({
 		render: function() {
-			console.log( this.state.quiz );
 			var errorMessage;
 
 			var renderPublishedQuizControls = function() {
