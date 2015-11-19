@@ -15,8 +15,8 @@
   "dependencies": {
     "joi": "^6.2.0",
     "lodash": "^3.6.0",
-    "quiz": "git+ssh://git@kasra-deploy:menapost/quiz-user-front-end.git",
-    "quiz-editor": "git+ssh://git@kasra-deploy:menapost/quiz-editor.git",
+    "quiz": "git+https://github.com/kasra-co/quiz-v1.git",
+    "quiz-editor": "git+https://github.com/kasra-co/quiz-editor-v1.git",
     "react": "^0.13.0",
     "reflux": "^0.2.7"
   },
